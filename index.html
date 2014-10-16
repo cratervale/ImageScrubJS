@@ -48,7 +48,7 @@
 				z-index: -9999;
 				height:100%;
 				background-color: blue;
-				/*left: 20%;*/
+				left: -80px;
 				/*right: 50%;*/
 			}
 		</style>
@@ -116,6 +116,7 @@
 				}
 			}
 			function checkNewTouchFrame(px){
+				px.preventDefault();
 				// console.log(px);
 				var newFrameIndex = lookupFrame(px.touches[0].clientX);
 				// console.log(newFrameIndex);
