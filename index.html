@@ -162,8 +162,8 @@
 			}
 
 			function calculateFrameWidth(){
-				containerWidth = container.width();
-				frameWidth = Math.floor(containerWidth/numberOfFrames);
+				containerWidth = $("body").width();
+				frameWidth = Math.ceil(containerWidth/numberOfFrames);
 
 				console.log(frameWidth);
 			}
