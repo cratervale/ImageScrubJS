@@ -85,18 +85,54 @@
 
 
 			var containerWidth;
+			var frameWidth;
 			var numberOfFrames = images.length;  //constant
 			var container;
 			var displayFrame;
+			
+			var lastFrameIndex = -1;
 
 			$(document).ready(function(){
 				initContainerAndFrames();
+				document.addEventListener('mousemove',checkNewMouseFrame,false);
+				document.addEventListener('touchmove',checkNewTouchFrame,false);
 			});
+			
+			function lookupFrame(px){
+				return Math.floor(px/frameWidth);
+			}
+			
+			
+			function checkNewMouseFrame(px){
+				// console.log(px.x);
+				var newFrameIndex = lookupFrame(px.x);
+				// console.log(newFrameIndex);
+				if(newFrameIndex === lastFrameIndex){
+				} else {
+					setImageFromSrc(images[newFrameIndex]);
+					// console.log("new frame");
+					// console.log(newFrameIndex);
+					lastFrameIndex = newFrameIndex;
+				}
+			}
+			function checkNewTouchFrame(px){
+				// console.log(px);
+				var newFrameIndex = lookupFrame(px.touches[0].clientX);
+				// console.log(newFrameIndex);
+				if(newFrameIndex === lastFrameIndex){
+				} else {
+					setImageFromSrc(images[newFrameIndex]);
+					// console.log("new frame");
+					// console.log(newFrameIndex);
+					lastFrameIndex = newFrameIndex;
+				}
+			}
+			
 
 			function createFrames(){
 				
 				for(i = 0; i < numberOfFrames; i++){
-					var frame = $("<div>").addClass("frame");
+
 					
 					frame.data('image', images[i]);
 					// frame.on("mouseover", function(){console.log($(this).data("image"))});
@@ -127,8 +163,6 @@
 			function calculateFrameWidth(){
 				containerWidth = container.width();
 				frameWidth = Math.floor(containerWidth/numberOfFrames);
-				$(".frame").css({'width': frameWidth});
-				displayFrame.css({"left": (containerWidth-displayFrame.width())/2});
 
 				console.log(frameWidth);
 			}
@@ -136,7 +170,7 @@
 			function initContainerAndFrames(){
 				container = $("#framesContainer");
 				displayFrame = $("#sequencecontainer");
-				createFrames();
+				// createFrames();
 				calculateFrameWidth();
 
 			}
