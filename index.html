@@ -22,7 +22,6 @@
 				/*background-color: #000;*/
 				background-size: cover;
 				background-repeat: no-repeat;
-
 			}
 
 			body{
@@ -33,13 +32,10 @@
 			}
 
 			.frame {
-
-
 				float:left;
 				height:100%;
 				border: none;
 				z-index: 9999;
-
 			}
 
 			#sequencecontainer{
@@ -56,23 +52,27 @@
 		<script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
 
 		<script type="text/javascript">
-
-			images = [];
-
 			var dir = "imgs";
-
 			var imagePrefix1 ="canyouscream_00000";
 			var imagePrefix2 ="canyouscream_0000";
 			var imagePrefix3 ="canyouscream_000";
-
+			
+			var images = [];
 			var imageNames = [];
+			
+			var containerWidth, frameWidth, container, displayFrame;
+			var numberOfFrames = images.length;  //constant	
+			var lastFrameIndex = -1;
+
 
 			for(i = 0; i < 10; i++){
 				imageNames.push(dir + "/" + imagePrefix1 + parseInt(i) + ".jpeg");
 			}
+			
 			for(i = 10; i < 100; i++){
 				imageNames.push(dir + "/" + imagePrefix2 + parseInt(i) + ".jpeg");
 			}
+			
 			for(i = 100; i < 195; i++){
 				imageNames.push(dir + "/" + imagePrefix3 + parseInt(i) + ".jpeg");
 			}
@@ -83,15 +83,6 @@
 				images.push(img);
 			};
 
-
-			var containerWidth;
-			var frameWidth;
-			var numberOfFrames = images.length;  //constant
-			var container;
-			var displayFrame;
-			
-			var lastFrameIndex = -1;
-
 			$(document).ready(function(){
 				initContainerAndFrames();
 				document.addEventListener('mousemove',checkNewMouseFrame,false);
@@ -101,7 +92,6 @@
 			function lookupFrame(px){
 				return Math.floor(px/frameWidth);
 			}
-			
 			
 			function checkNewMouseFrame(px){
 				// console.log(px.x);
@@ -115,6 +105,7 @@
 					lastFrameIndex = newFrameIndex;
 				}
 			}
+			
 			function checkNewTouchFrame(px){
 				px.preventDefault();
 				// console.log(px);
@@ -131,20 +122,15 @@
 			
 
 			function createFrames(){
-				
 				for(i = 0; i < numberOfFrames; i++){
-
-					
 					frame.data('image', images[i]);
 					// frame.on("mouseover", function(){console.log($(this).data("image"))});
 					frame.on("mouseover", function(){
 						// setContainerBackgroundImageFromString($(this).data("image").src);
 						setImageFromSrc($(this).data("image"));
 					});
-
 					container.append(frame);
 				}
-				
 			}
 
 			function setContainerBackgroundImageFromString (imageUrl){
@@ -153,18 +139,15 @@
 
 			function setContainerBackgroundImageFromImage(_image){
 				container.css('background-image', _image);
-
 			}
 
 			function setImageFromSrc(_src){
 				displayFrame.attr("src", _src.src);
-
 			}
 
 			function calculateFrameWidth(){
 				containerWidth = $("body").width();
 				frameWidth = Math.ceil(containerWidth/numberOfFrames);
-
 				console.log(frameWidth);
 			}
 
@@ -173,15 +156,12 @@
 				displayFrame = $("#sequencecontainer");
 				// createFrames();
 				calculateFrameWidth();
-
 			}
 
 
 			$(window).on("resize", function(){
 				console.log("resized");
 				calculateFrameWidth();
-
-
 			});
 		</script>
 	</head>
